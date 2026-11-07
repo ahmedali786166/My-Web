@@ -3,7 +3,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function isOwner() { return request.auth != null && request.auth.token.email == 'ahmedalisohu3@gmail.com'; }
     match /games/{gameId} {
-      allow read: if resource.data.published == true || isOwner();
+      allow get: if resource.data.published == true || isOwner();
+      allow list: if resource.data.published == true || isOwner();
       allow create, update, delete: if isOwner();
     }
     match /{document=**} { allow read, write: if false; }

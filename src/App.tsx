@@ -40,6 +40,8 @@ import {
   onSnapshot,
   increment,
   updateDoc,
+  query,
+  where,
 } from 'firebase/firestore';
 import GameOverlayModal from './components/GameOverlayModal';
 import AdsterraAd from './components/AdsterraAd';
@@ -64,9 +66,30 @@ function useLibrary() {
   const [games, setGames] = useState<Game[]>(getGames);
   useEffect(() => {
     if (!firebaseReady || !db) return;
-    return onSnapshot(collection(db, 'games'), (snapshot) => {
-      if (!snapshot.empty) setGames(snapshot.docs.map((entry) => entry.data() as Game));
-    });
+    const database = db;
+    let unsubscribeSnapshot: (() => void) | undefined;
+
+    const subscribe = () => {
+      unsubscribeSnapshot?.();
+      const isOwner = auth?.currentUser?.email?.toLowerCase() === OWNER_EMAIL;
+      const source = isOwner
+        ? collection(database, 'games')
+        : query(collection(database, 'games'), where('published', '==', true));
+      unsubscribeSnapshot = onSnapshot(
+        source,
+        (snapshot) => {
+          if (!snapshot.empty) setGames(snapshot.docs.map((entry) => entry.data() as Game));
+        },
+        () => {}
+      );
+    };
+
+    subscribe();
+    const unsubscribeAuth = auth ? onAuthStateChanged(auth, subscribe) : undefined;
+    return () => {
+      unsubscribeSnapshot?.();
+      unsubscribeAuth?.();
+    };
   }, []);
   const update = (next: Game[]) => {
     setGames(next);
