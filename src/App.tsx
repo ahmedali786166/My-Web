@@ -29,7 +29,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { categories, FEATURED_GAME_ID, getGames, saveGames, starterGames, type Game } from './lib/games';
-import { auth, db, firebaseReady } from './lib/firebase';
+import { auth, db, firebaseReady, OWNER_EMAIL } from './lib/firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import {
   collection,
@@ -659,7 +659,17 @@ function Admin() {
   const [editing, setEditing] = useState<Game | null>(null);
 
   useEffect(() => {
-    if (auth) return onAuthStateChanged(auth, setUser);
+    if (!auth) return;
+    const firebaseAuth = auth;
+    return onAuthStateChanged(firebaseAuth, (nextUser) => {
+      if (nextUser && nextUser.email?.toLowerCase() !== OWNER_EMAIL) {
+        signOut(firebaseAuth);
+        setError('This dashboard is restricted to the owner account.');
+        setUser(null);
+        return;
+      }
+      setUser(nextUser);
+    });
   }, []);
 
   const seeded = useRef(false);
@@ -698,7 +708,11 @@ function Admin() {
     event.preventDefault();
     try {
       if (!auth) throw new Error('Firebase is not configured. Add your Firebase environment variables first.');
-      await signInWithEmailAndPassword(auth, email, password);
+      const credential = await signInWithEmailAndPassword(auth, email, password);
+      if (credential.user.email?.toLowerCase() !== OWNER_EMAIL) {
+        await signOut(auth);
+        setError('This dashboard is restricted to the owner account.');
+      }
     } catch (authError: any) {
       setError(authError.message);
     }
