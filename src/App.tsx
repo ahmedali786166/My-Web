@@ -297,9 +297,11 @@ function Home() {
             <Link to="/games" className="btn secondary">
               Explore games <ArrowUpRight size={17} />
             </Link>
-            <a href="#trending" className="btn ghost">
-              Discover trending <Flame size={16} />
-            </a>
+            {trending.length > 0 && (
+              <a href="#trending" className="btn ghost">
+                Discover trending <Flame size={16} />
+              </a>
+            )}
           </div>
           <div className="hero-proof">
             <span>
@@ -372,41 +374,44 @@ function Home() {
             sub="Whatever your mood, there's a game for it."
           />
           <Categories selected={category} onSelect={setCategory} />
-          <div className="game-grid category-results">
-            {filtered.slice(0, 4).map((game) => (
-              <GameCard key={game.id} game={game} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="wrap section" id="trending">
-        <SectionTitle
-          eyebrow="THE CROWD FAVOURITES"
-          title="TRENDING RIGHT NOW"
-          sub="Sorted by real recorded plays. No made-up hype."
-        />
-        <div className="game-grid">
-          {trending.length ? (
-            trending.map((game) => <GameCard key={game.id} game={game} />)
-          ) : (
-            <Empty text="Trending picks will appear after games receive real plays." />
+          {live.length > 1 && (
+            <div className="game-grid category-results">
+              {filtered.slice(0, 4).map((game) => (
+                <GameCard key={game.id} game={game} />
+              ))}
+              {!filtered.length && <Empty text="No games in this category yet." />}
+            </div>
           )}
         </div>
       </section>
 
-      <section className="wrap section">
-        <SectionTitle
-          eyebrow="JUST DROPPED"
-          title="FRESHLY RELEASED"
-          sub="The latest additions to the arcade."
-        />
-        <div className="game-grid">
-          {fresh.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
-        </div>
-      </section>
+      {trending.length > 0 && (
+        <section className="wrap section" id="trending">
+          <SectionTitle
+            eyebrow="THE CROWD FAVOURITES"
+            title="TRENDING RIGHT NOW"
+            sub="Sorted by real recorded plays. No made-up hype."
+          />
+          <div className="game-grid">
+            {trending.map((game) => <GameCard key={game.id} game={game} />)}
+          </div>
+        </section>
+      )}
+
+      {fresh.length > 1 && (
+        <section className="wrap section">
+          <SectionTitle
+            eyebrow="JUST DROPPED"
+            title="FRESHLY RELEASED"
+            sub="The latest additions to the arcade."
+          />
+          <div className="game-grid">
+            {fresh.map((game) => (
+              <GameCard key={game.id} game={game} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="wrap cta-band">
         <div>
