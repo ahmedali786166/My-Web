@@ -1,5 +1,8 @@
 # Ahmed Arcade
 
+Live: https://ahmed-arcade.vercel.app
+Repository: https://github.com/ahmedali786166/My-Web
+
 A React + TypeScript + Vite browser-game portal with a dark neon design, an
 embedded featured game, catalogue discovery, guest favourites, a Firebase owner
 dashboard, Adsterra placements and a desi meme soundboard.
