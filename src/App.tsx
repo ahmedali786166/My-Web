@@ -42,7 +42,6 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import GameOverlayModal from './components/GameOverlayModal';
-import Soundboard from './components/Soundboard';
 import AdsterraAd from './components/AdsterraAd';
 
 const icons = [Gamepad2, PartyPopper, Star, Flame, Zap, MonitorPlay, Joystick, Gamepad];
@@ -104,9 +103,6 @@ function Header() {
           <NavLink to="/games" onClick={() => setOpen(false)}>
             Games
           </NavLink>
-          <NavLink to="/soundboard" onClick={() => setOpen(false)}>
-            MEME SOUNDBOARD 🔊
-          </NavLink>
           <a href="/#discover" onClick={() => setOpen(false)}>
             Discover
           </a>
@@ -152,7 +148,6 @@ function Footer() {
           <p>Small games. Big laughs. Zero boring moments.</p>
         </div>
         <div className="footer-links">
-          <Link to="/soundboard">Soundboard</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
           <Link to="/privacy">Privacy</Link>
@@ -358,7 +353,9 @@ function Home() {
             featured.slice(0, 4).map((game, index) => (
               <Fragment key={game.id}>
                 <GameCard game={game} />
-                {index === 1 && <AdsterraAd placement="grid" variant="card" />}
+                {(index === 1 || (featured.length === 1 && index === 0)) && (
+                  <AdsterraAd placement="grid" variant="card" />
+                )}
               </Fragment>
             ))
           ) : (
@@ -503,7 +500,9 @@ function GamesPage() {
           {list.map((game, index) => (
             <Fragment key={game.id}>
               <GameCard game={game} />
-              {index === 2 && <AdsterraAd placement="grid" variant="card" />}
+              {(index === 2 || (list.length <= 3 && index === list.length - 1)) && (
+                <AdsterraAd placement="grid" variant="card" />
+              )}
             </Fragment>
           ))}
         </div>
@@ -997,7 +996,6 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/games" element={<GamesPage />} />
         <Route path="/games/:slug" element={<GamePage />} />
-        <Route path="/soundboard" element={<Soundboard />} />
         <Route path="/admin" element={<Admin />} />
         <Route
           path="/about"
@@ -1016,10 +1014,12 @@ export default function App() {
           element={
             <Legal title="CONTACT US">
               <p>
-                For game submissions, copyright concerns or general questions, contact the site
-                owner through your configured support email. Add your public contact address before
-                launch.
+                For game submissions, copyright concerns, feedback or general questions, email the
+                owner directly. We usually reply within a couple of days.
               </p>
+              <a className="contact-mail" href="mailto:ahmedalisohu3@gmail.com">
+                ahmedalisohu3@gmail.com <ArrowUpRight size={16} />
+              </a>
             </Legal>
           }
         />
@@ -1057,9 +1057,11 @@ export default function App() {
               <p>
                 Ahmed Arcade respects intellectual property. If you believe material hosted or
                 linked here infringes your copyright, send the exact URL, a description of the
-                copyrighted work, your contact details and a good-faith statement to the site
-                owner's configured copyright contact. Replace this text with a monitored contact
-                address before launch.
+                copyrighted work, your contact details and a good-faith statement to{' '}
+                <a className="inline-link" href="mailto:ahmedalisohu3@gmail.com">
+                  ahmedalisohu3@gmail.com
+                </a>
+                .
               </p>
             </Legal>
           }

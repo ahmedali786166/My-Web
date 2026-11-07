@@ -5,7 +5,7 @@ Repository: https://github.com/ahmedali786166/My-Web
 
 A React + TypeScript + Vite browser-game portal with a dark neon design, an
 embedded featured game, catalogue discovery, guest favourites, a Firebase owner
-dashboard, Adsterra placements and a desi meme soundboard.
+dashboard and Adsterra placements.
 
 ## Features
 
@@ -18,9 +18,6 @@ dashboard, Adsterra placements and a desi meme soundboard.
   scripts safely (sequential injection, cleanup on unmount). Slots render above
   the header, as an in-feed neon card in the game grids, and in the overlay
   footer. Slots stay hidden in production until their env key exists.
-- **Meme Soundboard** — `/soundboard` with CID / Bollywood pads and instant
-  Web Audio synthesized fallbacks; optional MP3s in `public/sounds/` are used
-  automatically when present.
 - **Firebase** — email/password owner sign-in and Firestore game management.
   When the `games` collection is empty, the starter catalogue is seeded on the
   first successful owner login.
@@ -62,7 +59,8 @@ Never commit `.env`.
    the Firebase Console (public sign-up is intentionally absent).
 3. Create Firestore.
 4. Copy `.env.example` to `.env` and add the web-app values.
-5. Replace `REPLACE_WITH_OWNER_EMAIL` in `firestore.rules` and publish the rules.
+5. `firestore.rules` already targets the owner email `ahmedalisohu3@gmail.com`;
+   publish it in the Firebase Console.
 6. Sign in at `/admin`. If the `games` collection is empty it is seeded with the
    starter catalogue, including the featured game.
 

@@ -112,6 +112,31 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+.contact-mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 14px 18px;
+  border: 1px solid #a855f755;
+  border-radius: 12px;
+  background: linear-gradient(105deg, #a855f71f, #ec489914);
+  color: #e9c8ff;
+  font: 600 14px 'Space Grotesk';
+  letter-spacing: 0.2px;
+  transition: 0.2s;
+}
+.contact-mail:hover {
+  border-color: #ec4899;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px #a855f72e;
+}
+.inline-link {
+  color: #d8b4fe;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 /* ---------- Game overlay modal ---------- */
 .game-overlay {
@@ -272,125 +297,6 @@
   display: none;
 }
 
-/* ---------- Meme soundboard ---------- */
-.sound-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin: 30px 0 22px;
-}
-.sound-pad {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 22px 18px 18px;
-  overflow: hidden;
-  text-align: left;
-  color: #fff;
-  border: 1px solid color-mix(in srgb, var(--pad-color) 28%, transparent);
-  border-radius: 16px;
-  background: linear-gradient(160deg, #14101d, #0b0911);
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-.sound-pad::before {
-  content: '';
-  position: absolute;
-  inset: -40% 40% 60% -40%;
-  background: radial-gradient(circle, var(--pad-color), transparent 65%);
-  opacity: 0.14;
-  transition: opacity 0.2s;
-}
-.sound-pad:hover {
-  transform: translateY(-4px);
-  border-color: var(--pad-color);
-  box-shadow: 0 14px 40px color-mix(in srgb, var(--pad-color) 24%, transparent);
-}
-.sound-pad:hover::before {
-  opacity: 0.24;
-}
-.sound-pad.is-playing {
-  border-color: var(--pad-color);
-  box-shadow: 0 0 0 1px var(--pad-color), 0 0 34px color-mix(in srgb, var(--pad-color) 35%, transparent);
-  animation: padPulse 0.9s ease-in-out infinite;
-}
-.sound-emoji {
-  font-size: 30px;
-  line-height: 1;
-  filter: drop-shadow(0 4px 12px #000);
-}
-.sound-pad b {
-  margin-top: 10px;
-  font: 600 15px 'Space Grotesk';
-}
-.sound-pad small {
-  color: #9a93a8;
-  font-size: 10px;
-  line-height: 1.5;
-}
-.sound-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 12px;
-  color: var(--pad-color);
-  font-size: 8px;
-  letter-spacing: 1.2px;
-}
-.sound-status i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--pad-color);
-  box-shadow: 0 0 10px var(--pad-color);
-}
-.sound-pad.is-playing .sound-status i {
-  animation: blink 0.5s steps(2) infinite;
-}
-.sound-footer {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
-  padding: 18px;
-  border: 1px solid #ffffff12;
-  border-radius: 14px;
-  background: #0e0c15;
-}
-.sound-note {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  flex: 1;
-  min-width: 220px;
-  color: #928a9f;
-  font-size: 10px;
-  line-height: 1.6;
-}
-.sound-note code {
-  padding: 2px 5px;
-  border-radius: 4px;
-  background: #1b1626;
-  color: #d8b4fe;
-  font-size: 9px;
-}
-.sound-badge {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #d8b4fe;
-  font-size: 9px;
-  letter-spacing: 1px;
-}
-.sound-tip {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin-top: 16px;
-  color: #777183;
-  font-size: 10px;
-}
-
 /* ---------- Keyframes ---------- */
 @keyframes overlayIn {
   from {
@@ -405,16 +311,6 @@
     transform: rotate(360deg);
   }
 }
-@keyframes padPulse {
-  50% {
-    transform: translateY(-2px);
-  }
-}
-@keyframes blink {
-  50% {
-    opacity: 0.25;
-  }
-}
 
 /* ---------- Responsive ---------- */
 @media (min-width: 761px) and (max-width: 1020px) {
@@ -424,9 +320,14 @@
     display: none;
   }
 }
+@media (min-width: 761px) {
+  .game-grid > .game-card:only-child {
+    grid-column: span 2;
+  }
+}
 @media (max-width: 900px) {
-  .sound-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .contact-mail {
+    font-size: 13px;
   }
 }
 @media (max-width: 760px) {
@@ -465,33 +366,14 @@
   .detail-actions {
     margin-top: 16px;
   }
-  .sound-grid {
-    gap: 11px;
-    margin-top: 22px;
-  }
-  .sound-pad {
-    padding: 18px 14px 15px;
-  }
-  .sound-pad b {
-    font-size: 13px;
-  }
-  .sound-footer {
-    gap: 12px;
-  }
-  .sound-badge {
-    display: none;
+  .game-grid > .game-card:only-child {
+    grid-column: 1 / -1;
   }
   .nav-links a {
     font-size: 12px;
   }
 }
 @media (max-width: 420px) {
-  .sound-grid {
-    grid-template-columns: 1fr;
-  }
-  .sound-emoji {
-    font-size: 26px;
-  }
   .overlay-title b {
     max-width: 42vw;
   }
