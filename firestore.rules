@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner() { return request.auth != null && request.auth.token.email == 'REPLACE_WITH_OWNER_EMAIL'; }
+    match /games/{gameId} {
+      allow read: if resource.data.published == true || isOwner();
+      allow create, update, delete: if isOwner();
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

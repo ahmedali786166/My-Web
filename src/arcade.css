@@ -1,0 +1,498 @@
+/* ---------- Header top ad + Adsterra slots ---------- */
+.nav-links {
+  gap: 18px;
+}
+.nav-links a {
+  font-size: 11.5px;
+}
+.top-ad {
+  padding-top: 10px;
+}
+.top-ad .wrap {
+  display: flex;
+  justify-content: center;
+}
+.top-ad .wrap:empty {
+  display: none;
+}
+.ad-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #ffffff12;
+  border-radius: 12px;
+  color: #8d7d9f;
+}
+.ad-slot iframe {
+  max-width: 100%;
+}
+.ad-bar {
+  width: 100%;
+  min-height: 62px;
+  padding: 10px 16px;
+  gap: 12px;
+}
+.ad-card {
+  flex-direction: column;
+  min-height: 220px;
+  height: 100%;
+  padding: 20px;
+  gap: 6px;
+  border-color: #a855f733;
+  background: radial-gradient(circle at 50% 0, #a855f722, transparent 62%), #0d0b14;
+}
+.ad-strip {
+  width: 100%;
+  min-height: 48px;
+  gap: 8px;
+  border: 0;
+  border-top: 1px solid #ffffff10;
+  border-radius: 0;
+  background: #0c0a13;
+}
+.ad-placeholder span {
+  font: 700 18px 'Space Grotesk';
+  color: #c084fc;
+  letter-spacing: 2px;
+}
+.ad-placeholder small {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: #8e8499;
+  text-transform: uppercase;
+}
+.ad-placeholder em {
+  font-style: normal;
+  font-size: 8px;
+  color: #5f586b;
+}
+.ad-card.ad-placeholder span {
+  font-size: 26px;
+}
+.ad-card.ad-placeholder {
+  background: radial-gradient(circle at 50% 0, #a855f722, transparent 62%), #0d0b14;
+}
+
+/* ---------- Hero additions ---------- */
+.btn.ghost {
+  background: transparent;
+  border-color: #2a2536;
+  color: #b9b2c6;
+}
+.btn.ghost:hover {
+  color: #fff;
+  border-color: #a855f766;
+}
+.hero-proof .hero-live {
+  color: #d8b4fe;
+}
+
+/* ---------- Game card play button ---------- */
+.card-image {
+  display: block;
+  position: relative;
+}
+.card-image > a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.play-overlay {
+  z-index: 2;
+  border: 0;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ---------- Game detail actions ---------- */
+.detail-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Game overlay modal ---------- */
+.game-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(3, 2, 8, 0.84);
+  backdrop-filter: blur(10px);
+  animation: overlayIn 0.18s ease-out;
+}
+.overlay-dialog {
+  width: min(1280px, 100%);
+  height: min(88vh, 860px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #0a0911;
+  border: 1px solid #ffffff20;
+  border-radius: 16px;
+  box-shadow: 0 30px 90px #000c, 0 0 60px #a855f722;
+}
+.overlay-dialog:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  border: 0;
+  border-radius: 0;
+}
+.overlay-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: linear-gradient(100deg, #171122, #0e0c16);
+  border-bottom: 1px solid #ffffff14;
+}
+.overlay-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  color: #e9d9ff;
+}
+.overlay-title svg {
+  flex: none;
+  color: #c084fc;
+}
+.overlay-title b {
+  font: 600 13px 'Space Grotesk';
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.overlay-controls {
+  display: flex;
+  gap: 7px;
+  flex: none;
+}
+.overlay-controls button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid #ffffff1c;
+  border-radius: 8px;
+  background: #1b1626;
+  color: #cdb8e6;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  transition: 0.18s;
+}
+.overlay-controls button:hover {
+  background: #2a2038;
+  border-color: #a855f766;
+  color: #fff;
+}
+.overlay-controls em {
+  font-style: normal;
+  font-size: 11px;
+}
+.overlay-close {
+  background: #3a1220 !important;
+  border-color: #fb718544 !important;
+  color: #ffb3c1 !important;
+}
+.overlay-close:hover {
+  background: #571a2d !important;
+}
+.overlay-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: #050409;
+}
+.overlay-body iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+.overlay-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #08070d;
+  color: #a79ab8;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}
+.loader-ring {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #ffffff1c;
+  border-top-color: #c084fc;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.overlay-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: #d8b4fe;
+  text-align: center;
+}
+.overlay-empty h3 {
+  margin: 8px 0 0;
+  font: 600 19px 'Space Grotesk';
+  color: #fff;
+}
+.overlay-empty p {
+  margin: 0;
+  max-width: 380px;
+  color: #9994a4;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.overlay-ad {
+  flex: none;
+  background: #0c0a13;
+}
+.overlay-ad:empty {
+  display: none;
+}
+
+/* ---------- Meme soundboard ---------- */
+.sound-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 30px 0 22px;
+}
+.sound-pad {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 18px 18px;
+  overflow: hidden;
+  text-align: left;
+  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--pad-color) 28%, transparent);
+  border-radius: 16px;
+  background: linear-gradient(160deg, #14101d, #0b0911);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.sound-pad::before {
+  content: '';
+  position: absolute;
+  inset: -40% 40% 60% -40%;
+  background: radial-gradient(circle, var(--pad-color), transparent 65%);
+  opacity: 0.14;
+  transition: opacity 0.2s;
+}
+.sound-pad:hover {
+  transform: translateY(-4px);
+  border-color: var(--pad-color);
+  box-shadow: 0 14px 40px color-mix(in srgb, var(--pad-color) 24%, transparent);
+}
+.sound-pad:hover::before {
+  opacity: 0.24;
+}
+.sound-pad.is-playing {
+  border-color: var(--pad-color);
+  box-shadow: 0 0 0 1px var(--pad-color), 0 0 34px color-mix(in srgb, var(--pad-color) 35%, transparent);
+  animation: padPulse 0.9s ease-in-out infinite;
+}
+.sound-emoji {
+  font-size: 30px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 12px #000);
+}
+.sound-pad b {
+  margin-top: 10px;
+  font: 600 15px 'Space Grotesk';
+}
+.sound-pad small {
+  color: #9a93a8;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.sound-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: var(--pad-color);
+  font-size: 8px;
+  letter-spacing: 1.2px;
+}
+.sound-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pad-color);
+  box-shadow: 0 0 10px var(--pad-color);
+}
+.sound-pad.is-playing .sound-status i {
+  animation: blink 0.5s steps(2) infinite;
+}
+.sound-footer {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 18px;
+  border: 1px solid #ffffff12;
+  border-radius: 14px;
+  background: #0e0c15;
+}
+.sound-note {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  min-width: 220px;
+  color: #928a9f;
+  font-size: 10px;
+  line-height: 1.6;
+}
+.sound-note code {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: #1b1626;
+  color: #d8b4fe;
+  font-size: 9px;
+}
+.sound-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #d8b4fe;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.sound-tip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 16px;
+  color: #777183;
+  font-size: 10px;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes padPulse {
+  50% {
+    transform: translateY(-2px);
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (min-width: 761px) and (max-width: 1020px) {
+  .nav-links a[href='/#discover'],
+  .nav-links a[href='/#trending'],
+  .nav-links a[href='/#categories'] {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .sound-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .game-overlay {
+    padding: 0;
+  }
+  .overlay-dialog {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+  }
+  .overlay-controls button {
+    padding: 8px;
+  }
+  .overlay-controls button span {
+    display: none;
+  }
+  .overlay-controls em {
+    font-size: 12px;
+  }
+  .overlay-title b {
+    font-size: 11px;
+  }
+  .ad-bar {
+    min-height: 52px;
+    padding: 8px 10px;
+  }
+  .ad-placeholder em {
+    display: none;
+  }
+  .ad-card {
+    min-height: 170px;
+  }
+  .detail-actions {
+    margin-top: 16px;
+  }
+  .sound-grid {
+    gap: 11px;
+    margin-top: 22px;
+  }
+  .sound-pad {
+    padding: 18px 14px 15px;
+  }
+  .sound-pad b {
+    font-size: 13px;
+  }
+  .sound-footer {
+    gap: 12px;
+  }
+  .sound-badge {
+    display: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+  }
+}
+@media (max-width: 420px) {
+  .sound-grid {
+    grid-template-columns: 1fr;
+  }
+  .sound-emoji {
+    font-size: 26px;
+  }
+  .overlay-title b {
+    max-width: 42vw;
+  }
+}
