@@ -9,7 +9,7 @@ dashboard and Adsterra placements.
 
 ## Features
 
-- **Featured game + overlay player** — *Shahenshah Flappy Ops 👑* runs from
+- **Featured game + overlay player** — *Amitabh Bachan Meme Game* runs from
   `https://shahenshah-meme-game.vercel.app/` inside a responsive modal with
   fullscreen, reload and close controls.
 - **Local games folder** — drop HTML5 games into `public/games/` and point the
@@ -59,8 +59,10 @@ Never commit `.env`.
    the Firebase Console (public sign-up is intentionally absent).
 3. Create Firestore.
 4. Copy `.env.example` to `.env` and add the web-app values.
-5. `firestore.rules` already targets the owner email `ahmedalisohu3@gmail.com`;
-   publish it in the Firebase Console.
+5. `firestore.rules` already targets the owner email `ahmedalisohu3@gmail.com`.
+   Publish it in the Firebase Console, or from the CLI after `firebase login`:
+   `npx firebase-tools deploy --only firestore:rules` (config is in
+   `firebase.json`).
 6. Sign in at `/admin`. If the `games` collection is empty it is seeded with the
    starter catalogue, including the featured game.
 
