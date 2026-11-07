@@ -266,6 +266,7 @@ function Home() {
     .sort((a, b) => b.playCount - a.playCount)
     .slice(0, 4);
   const filtered = category === 'All Games' ? live : live.filter((game) => game.category === category);
+  const showTrending = live.length > 1 && trending.length > 0;
   const heroGame =
     live.find((game) => game.id === FEATURED_GAME_ID && game.gameUrl) ??
     live.find((game) => game.gameUrl) ??
@@ -297,7 +298,7 @@ function Home() {
             <Link to="/games" className="btn secondary">
               Explore games <ArrowUpRight size={17} />
             </Link>
-            {trending.length > 0 && (
+            {showTrending && (
               <a href="#trending" className="btn ghost">
                 Discover trending <Flame size={16} />
               </a>
@@ -385,7 +386,7 @@ function Home() {
         </div>
       </section>
 
-      {trending.length > 0 && (
+      {showTrending && (
         <section className="wrap section" id="trending">
           <SectionTitle
             eyebrow="THE CROWD FAVOURITES"
