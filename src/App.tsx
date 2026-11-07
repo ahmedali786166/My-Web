@@ -756,8 +756,8 @@ function Admin() {
           {error && <p className="error">{error}</p>}
           {!firebaseReady && (
             <p className="setup-note">
-              Firebase isn't configured yet. Create a Firebase project, copy .env.example to .env and
-              add your web app credentials.
+              Firebase isn't configured yet. Add the six VITE_FIREBASE_* values in Vercel →
+              Settings → Environment Variables (or in a local .env), then redeploy.
             </p>
           )}
         </div>
