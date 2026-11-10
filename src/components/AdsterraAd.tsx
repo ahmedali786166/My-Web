@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-export type AdUnit = 'leaderboard' | 'rectangle' | 'skyscraper';
+export type AdUnit = 'leaderboard' | 'rectangle';
 
 type UnitConfig = {
   key: string;
@@ -25,13 +25,6 @@ const UNITS: Record<AdUnit, UnitConfig> = {
     scriptUrl: 'https://bauval.org/22/2f92e0ed99b9871d0d66e193ba63d266',
     label: 'Medium rectangle 300x250',
   },
-  skyscraper: {
-    key: 'bbcb7c59aefc7bcd64921605f4d8f0ad',
-    width: 160,
-    height: 600,
-    scriptUrl: 'https://bauval.org/22/bbcb7c59aefc7bcd64921605f4d8f0ad',
-    label: 'Skyscraper 160x600',
-  },
 };
 
 // Each banner lives in its own srcdoc iframe so every unit gets a private
@@ -50,7 +43,7 @@ function buildAdDocument(config: UnitConfig) {
 
 type Props = {
   unit: AdUnit;
-  variant?: 'bar' | 'card' | 'strip' | 'inline' | 'rail';
+  variant?: 'bar' | 'card' | 'inline';
   className?: string;
 };
 

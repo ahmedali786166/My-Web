@@ -46,7 +46,7 @@ Copy `.env.example` to `.env` and fill in:
 | `VITE_FIREBASE_*` | Firebase web-app config (Auth + Firestore) |
 | `VITE_SITE_URL` | Canonical site URL |
 
-Ads are hard-coded in `src/components/AdsterraAd.tsx` (728x90 leaderboard, 300x250 rectangle, 160x600 skyscraper) and in `index.html` (social bar + popunder). Set `VITE_ADSTERRA_PREVIEW=false` in a local `.env` if you want real ads during `npm run dev`.
+Ads are hard-coded in `src/components/AdsterraAd.tsx` (728x90 leaderboard, 300x250 rectangle) and in `index.html` (social bar). Set `VITE_ADSTERRA_PREVIEW=false` in a local `.env` if you want real ads during `npm run dev`.
 
 Never commit `.env`.
 

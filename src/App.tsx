@@ -1,6 +1,6 @@
 import type { FormEvent, ReactNode } from 'react';
 import { Fragment, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Link, NavLink, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import {
   Gamepad2,
   Search,
@@ -1025,7 +1025,6 @@ function NotFound() {
 }
 
 export default function App() {
-  const location = useLocation();
   const [activeGame, setActiveGame] = useState<Game | null>(null);
   const openGame = useCallback((game: Game) => {
     if (game.gameUrl) setActiveGame(game);
@@ -1043,9 +1042,6 @@ export default function App() {
           <AdsterraAd unit="leaderboard" />
         </div>
       </div>
-      {!location.pathname.startsWith('/admin') && (
-        <AdsterraAd unit="skyscraper" variant="rail" className="rail-ad" />
-      )}
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
