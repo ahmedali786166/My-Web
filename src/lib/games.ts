@@ -41,9 +41,30 @@ export const starterGames: Game[] = [
     seoDescription:
       'Play the Amitabh Bachan Meme Game, a high-octane Bollywood Flappy challenge, right here on Ahmed Arcade.',
   },
+  {
+    id: 'g1',
+    title: 'Bhag Modi Bhag: Meme Chase',
+    slug: 'bhag-modi-bhag-meme-chase',
+    description:
+      'Modi is on the run and Monster ACP is right behind him. Dodge traffic, grab coins and survive the neon dusk highway in this wild 3D endless runner.',
+    category: 'Meme Games',
+    thumbnail: '/games/acp-meme-game.jpg',
+    gameUrl: 'https://acp-meme-game.vercel.app/',
+    gameType: 'iframe',
+    instructions:
+      'Use the left and right arrows to switch lanes, the up arrow to jump and the down arrow to roll. Grab coins, dodge traffic and keep all three hearts alive.',
+    controls: '← → lanes · ↑ jump · ↓ roll · swipe on mobile. Fullscreen and reload are available in the game player.',
+    published: true,
+    featured: true,
+    createdAt: '2026-11-10',
+    playCount: 0,
+    seoTitle: 'Bhag Modi Bhag: Meme Chase | Ahmed Arcade',
+    seoDescription:
+      'Play Bhag Modi Bhag: Meme Chase, a 3D endless runner where Modi escapes the Monster ACP, right here on Ahmed Arcade.',
+  },
 ];
 
-const KEY = 'ahmed-arcade-games-v3';
+const KEY = 'ahmed-arcade-games-v4';
 
 export function getGames(): Game[] {
   try {

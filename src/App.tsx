@@ -283,9 +283,9 @@ function Home() {
   const [category, setCategory] = useState('All Games');
   const live = games.filter((game) => game.published);
   const featured = live.filter((game) => game.featured);
-  const fresh = [...live].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 4);
+  const fresh = [...live].filter((game) => !game.featured).sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 4);
   const trending = [...live]
-    .filter((game) => game.playCount > 0)
+    .filter((game) => game.playCount > 0 && !game.featured)
     .sort((a, b) => b.playCount - a.playCount)
     .slice(0, 4);
   const filtered = category === 'All Games' ? live : live.filter((game) => game.category === category);
@@ -398,7 +398,7 @@ function Home() {
             sub="Whatever your mood, there's a game for it."
           />
           <Categories selected={category} onSelect={setCategory} />
-          {live.length > 1 && (
+          {category !== 'All Games' && live.length > 1 && (
             <div className="game-grid category-results">
               {filtered.slice(0, 4).map((game) => (
                 <GameCard key={game.id} game={game} />
@@ -422,7 +422,7 @@ function Home() {
         </section>
       )}
 
-      {fresh.length > 1 && (
+      {fresh.length > 0 && (
         <section className="wrap section">
           <SectionTitle
             eyebrow="JUST DROPPED"
