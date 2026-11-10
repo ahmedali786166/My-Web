@@ -45,10 +45,8 @@ Copy `.env.example` to `.env` and fill in:
 | --- | --- |
 | `VITE_FIREBASE_*` | Firebase web-app config (Auth + Firestore) |
 | `VITE_SITE_URL` | Canonical site URL |
-| `VITE_ADSTERRA_ENABLED` | Set `false` to disable all ad injection |
-| `VITE_ADSTERRA_HOME_BANNER` | Header leaderboard `invoke.js` URL or bare ad key |
-| `VITE_ADSTERRA_GAME_BANNER` | In-feed rectangle `invoke.js` URL or bare ad key |
-| `VITE_ADSTERRA_MODAL_BANNER` | Game overlay footer strip `invoke.js` URL or bare ad key |
+
+Ads are hard-coded in `src/components/AdsterraAd.tsx` (728x90 leaderboard, 300x250 rectangle, 160x600 skyscraper) and in `index.html` (social bar + popunder). Set `VITE_ADSTERRA_PREVIEW=false` in a local `.env` if you want real ads during `npm run dev`.
 
 Never commit `.env`.
 
