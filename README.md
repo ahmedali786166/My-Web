@@ -1,6 +1,6 @@
 # Ahmed Arcade
 
-Live: https://ahmed-arcade.vercel.app
+Live: https://ahmedplay.tech
 Repository: https://github.com/ahmedali786166/My-Web
 
 A React + TypeScript + Vite browser-game portal with a dark neon design, an
