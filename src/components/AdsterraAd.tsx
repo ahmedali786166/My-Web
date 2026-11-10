@@ -1,136 +1,92 @@
-import { useEffect, useRef } from 'react';
+import { useMemo } from 'react';
 
-declare global {
-  interface Window {
-    atOptions?: Record<string, unknown>;
-  }
-}
+export type AdUnit = 'leaderboard' | 'rectangle' | 'skyscraper';
 
-export type AdPlacement = 'header' | 'grid' | 'modal';
-
-type PlacementConfig = {
-  envKey: string;
+type UnitConfig = {
+  key: string;
   width: number;
   height: number;
+  scriptUrl: string;
   label: string;
 };
 
-const PLACEMENTS: Record<AdPlacement, PlacementConfig> = {
-  header: {
-    envKey: 'VITE_ADSTERRA_HOME_BANNER',
+const UNITS: Record<AdUnit, UnitConfig> = {
+  leaderboard: {
+    key: '446e4b7009b15f8c408aea134bfa0eb4',
     width: 728,
     height: 90,
-    label: 'Header leaderboard',
+    scriptUrl: 'https://bauval.org/22/446e4b7009b15f8c408aea134bfa0eb4',
+    label: 'Leaderboard 728x90',
   },
-  grid: {
-    envKey: 'VITE_ADSTERRA_GAME_BANNER',
+  rectangle: {
+    key: '2f92e0ed99b9871d0d66e193ba63d266',
     width: 300,
     height: 250,
-    label: 'In-feed rectangle',
+    scriptUrl: 'https://bauval.org/22/2f92e0ed99b9871d0d66e193ba63d266',
+    label: 'Medium rectangle 300x250',
   },
-  modal: {
-    envKey: 'VITE_ADSTERRA_MODAL_BANNER',
-    width: 320,
-    height: 50,
-    label: 'Game overlay strip',
+  skyscraper: {
+    key: 'bbcb7c59aefc7bcd64921605f4d8f0ad',
+    width: 160,
+    height: 600,
+    scriptUrl: 'https://bauval.org/22/bbcb7c59aefc7bcd64921605f4d8f0ad',
+    label: 'Skyscraper 160x600',
   },
 };
 
-const AD_HOST = 'https://www.highperformanceformat.com';
-
-function resolveSlot(raw?: string) {
-  const value = raw?.trim();
-  if (!value) return null;
-  if (value.startsWith('//')) return resolveSlot(`https:${value}`);
-  if (/^https?:\/\//i.test(value)) {
-    const parts = value.split('/').filter(Boolean);
-    const key = parts[parts.length - 2] ?? '';
-    return { scriptUrl: value, key };
-  }
-  return { scriptUrl: `${AD_HOST}/${encodeURIComponent(value)}/invoke.js`, key: value };
+// Each banner lives in its own srcdoc iframe so every unit gets a private
+// window.atOptions. Adsterra's invoke.js writes its iframe into the current
+// document, which would clash if several units shared the page window.
+function buildAdDocument(config: UnitConfig) {
+  const options = JSON.stringify({
+    key: config.key,
+    format: 'iframe',
+    height: config.height,
+    width: config.width,
+    params: {},
+  });
+  return `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;padding:0;overflow:hidden;background:transparent}</style></head><body><script>atOptions=${options}</script><script src="${config.scriptUrl}"></script></body></html>`;
 }
 
-// Adsterra's invoke.js reads the shared window.atOptions global. Inject one slot
-// at a time so concurrent containers can never overwrite each other's config.
-let injectionQueue: Promise<void> = Promise.resolve();
-
 type Props = {
-  placement: AdPlacement;
-  variant?: 'bar' | 'card' | 'strip';
+  unit: AdUnit;
+  variant?: 'bar' | 'card' | 'strip' | 'inline' | 'rail';
   className?: string;
 };
 
-export default function AdsterraAd({ placement, variant = 'bar', className = '' }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const config = PLACEMENTS[placement];
-  const enabled = import.meta.env.VITE_ADSTERRA_ENABLED !== 'false';
-  const slot = enabled
-    ? resolveSlot(import.meta.env[config.envKey] as string | undefined)
-    : null;
+export default function AdsterraAd({ unit, variant = 'bar', className = '' }: Props) {
+  const config = UNITS[unit];
+  const preview = import.meta.env.DEV && import.meta.env.VITE_ADSTERRA_PREVIEW !== 'false';
+  const srcDoc = useMemo(() => buildAdDocument(config), [config]);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!slot || !container) return;
+  const classes = `ad-slot ad-slot-${unit} ad-${variant} ${className}`.trim();
 
-    let cancelled = false;
-
-    const inject = async () => {
-      if (cancelled || !container.isConnected) return;
-      container.innerHTML = '';
-      window.atOptions = {
-        key: slot.key,
-        format: 'iframe',
-        height: config.height,
-        width: config.width,
-        params: {},
-      };
-      await new Promise<void>((resolve) => {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.async = true;
-        script.src = slot.scriptUrl;
-        script.dataset.adsterraSlot = placement;
-        let timer = 0;
-        const finish = () => {
-          window.clearTimeout(timer);
-          resolve();
-        };
-        timer = window.setTimeout(finish, 6000);
-        script.onload = finish;
-        script.onerror = finish;
-        container.appendChild(script);
-      });
-    };
-
-    injectionQueue = injectionQueue.then(inject, inject);
-
-    return () => {
-      cancelled = true;
-      container.innerHTML = '';
-    };
-  }, [slot?.scriptUrl, slot?.key, config.width, config.height, placement]);
-
-  if (!slot) {
-    if (!import.meta.env.DEV) return null;
+  if (preview) {
     return (
       <div
-        className={`ad-slot ad-slot-${placement} ad-${variant} ad-placeholder ${className}`}
-        data-ad-slot={config.label}
+        className={`${classes} ad-placeholder`}
+        data-ad-unit={unit}
         aria-label="Advertisement placeholder"
       >
         <span>AD</span>
         <small>{config.label}</small>
-        <em>Add {config.envKey}</em>
+        <em>Adsterra banner</em>
       </div>
     );
   }
 
   return (
-    <div
-      ref={containerRef}
-      className={`ad-slot ad-slot-${placement} ad-${variant} ${className}`}
-      data-ad-slot={config.label}
-      aria-label="Advertisement"
-    />
+    <div className={classes} data-ad-unit={unit} aria-label="Advertisement">
+      <iframe
+        title={config.label}
+        srcDoc={srcDoc}
+        width={config.width}
+        height={config.height}
+        scrolling="no"
+        frameBorder={0}
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+    </div>
   );
 }

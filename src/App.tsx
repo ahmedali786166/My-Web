@@ -1,6 +1,6 @@
 import type { FormEvent, ReactNode } from 'react';
 import { Fragment, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { Link, NavLink, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Gamepad2,
   Search,
@@ -385,7 +385,7 @@ function Home() {
               <Fragment key={game.id}>
                 <GameCard game={game} />
                 {(index === 1 || (featured.length === 1 && index === 0)) && (
-                  <AdsterraAd placement="grid" variant="card" />
+                  <AdsterraAd unit="rectangle" variant="card" />
                 )}
               </Fragment>
             ))
@@ -535,7 +535,7 @@ function GamesPage() {
             <Fragment key={game.id}>
               <GameCard game={game} />
               {(index === 2 || (list.length <= 3 && index === list.length - 1)) && (
-                <AdsterraAd placement="grid" variant="card" />
+                <AdsterraAd unit="rectangle" variant="card" />
               )}
             </Fragment>
           ))}
@@ -665,6 +665,9 @@ function GamePage() {
           <h3>Controls</h3>
           <p>{game.controls}</p>
         </section>
+      </div>
+      <div className="detail-ad">
+        <AdsterraAd unit="rectangle" variant="inline" />
       </div>
       <div className="detail-bottom">
         <span>
@@ -1022,6 +1025,7 @@ function NotFound() {
 }
 
 export default function App() {
+  const location = useLocation();
   const [activeGame, setActiveGame] = useState<Game | null>(null);
   const openGame = useCallback((game: Game) => {
     if (game.gameUrl) setActiveGame(game);
@@ -1036,9 +1040,12 @@ export default function App() {
     <GameModalContext.Provider value={modalValue}>
       <div className="top-ad">
         <div className="wrap">
-          <AdsterraAd placement="header" />
+          <AdsterraAd unit="leaderboard" />
         </div>
       </div>
+      {!location.pathname.startsWith('/admin') && (
+        <AdsterraAd unit="skyscraper" variant="rail" className="rail-ad" />
+      )}
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

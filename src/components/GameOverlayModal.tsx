@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Gamepad2 } from 'lucide-react';
 import type { Game } from '../lib/games';
-import AdsterraAd from './AdsterraAd';
 
 type Props = {
   game: Game | null;
@@ -133,9 +132,6 @@ export default function GameOverlayModal({ game, onClose }: Props) {
           )}
         </div>
 
-        <div className="overlay-ad">
-          <AdsterraAd placement="modal" variant="strip" />
-        </div>
       </div>
     </div>,
     document.body
