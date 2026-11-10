@@ -78,7 +78,12 @@ function useLibrary() {
       unsubscribeSnapshot = onSnapshot(
         source,
         (snapshot) => {
-          if (!snapshot.empty) setGames(snapshot.docs.map((entry) => entry.data() as Game));
+          const cloudGames = snapshot.docs.map((entry) => entry.data() as Game);
+          const cloudIds = new Set(cloudGames.map((game) => game.id));
+          setGames([
+            ...cloudGames,
+            ...starterGames.filter((game) => !cloudIds.has(game.id)),
+          ]);
         },
         () => {}
       );
