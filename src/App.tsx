@@ -284,7 +284,7 @@ function Categories({ selected, onSelect }: { selected: string; onSelect: (value
 
 function Home() {
   const { games } = useLibrary();
-  const { openGame } = useGameModal();
+  const { openGame, activeGame } = useGameModal();
   const [category, setCategory] = useState('All Games');
   const live = games.filter((game) => game.published);
   const featured = live.filter((game) => game.featured);
@@ -384,7 +384,7 @@ function Home() {
             featured.slice(0, 4).map((game, index) => (
               <Fragment key={game.id}>
                 <GameCard game={game} />
-                {(index === 1 || (featured.length === 1 && index === 0)) && (
+                {(index === 1 || (featured.length === 1 && index === 0)) && !activeGame && (
                   <AdsterraAd unit="rectangle" variant="card" />
                 )}
               </Fragment>
@@ -473,6 +473,7 @@ function Empty({ text }: { text: string }) {
 
 function GamesPage() {
   const { games } = useLibrary();
+  const { activeGame } = useGameModal();
   const [search, setSearch] = useState(new URLSearchParams(location.search).get('search') || '');
   const [cat, setCat] = useState('All Games');
   const [sort, setSort] = useState('newest');
@@ -534,7 +535,7 @@ function GamesPage() {
           {list.map((game, index) => (
             <Fragment key={game.id}>
               <GameCard game={game} />
-              {(index === 2 || (list.length <= 3 && index === list.length - 1)) && (
+              {(index === 2 || (list.length <= 3 && index === list.length - 1)) && !activeGame && (
                 <AdsterraAd unit="rectangle" variant="card" />
               )}
             </Fragment>
@@ -550,7 +551,7 @@ function GamesPage() {
 function GamePage() {
   const { slug } = useParams();
   const { games } = useLibrary();
-  const { openGame } = useGameModal();
+  const { openGame, activeGame } = useGameModal();
   const game = games.find((entry) => entry.slug === slug);
   const [loaded, setLoaded] = useState(false);
 
@@ -666,9 +667,11 @@ function GamePage() {
           <p>{game.controls}</p>
         </section>
       </div>
-      <div className="detail-ad">
-        <AdsterraAd unit="rectangle" variant="inline" />
-      </div>
+      {!activeGame && (
+        <div className="detail-ad">
+          <AdsterraAd unit="rectangle" variant="inline" />
+        </div>
+      )}
       <div className="detail-bottom">
         <span>
           <Clock3 size={15} /> Added {new Date(game.createdAt).toLocaleDateString()}
@@ -1037,11 +1040,13 @@ export default function App() {
 
   return (
     <GameModalContext.Provider value={modalValue}>
-      <div className="top-ad">
-        <div className="wrap">
-          <AdsterraAd unit="leaderboard" />
+      {!activeGame && (
+        <div className="top-ad">
+          <div className="wrap">
+            <AdsterraAd unit="leaderboard" />
+          </div>
         </div>
-      </div>
+      )}
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
