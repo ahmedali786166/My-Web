@@ -284,7 +284,7 @@ function Categories({ selected, onSelect }: { selected: string; onSelect: (value
 
 function Home() {
   const { games } = useLibrary();
-  const { openGame, activeGame } = useGameModal();
+  const { openGame } = useGameModal();
   const [category, setCategory] = useState('All Games');
   const live = games.filter((game) => game.published);
   const featured = live.filter((game) => game.featured);
@@ -381,13 +381,8 @@ function Home() {
         />
         <div className="game-grid">
           {featured.length ? (
-            featured.slice(0, 4).map((game, index) => (
-              <Fragment key={game.id}>
-                <GameCard game={game} />
-                {(index === 1 || (featured.length === 1 && index === 0)) && !activeGame && (
-                  <AdsterraAd unit="rectangle" variant="card" />
-                )}
-              </Fragment>
+            featured.slice(0, 4).map((game) => (
+              <GameCard key={game.id} game={game} />
             ))
           ) : (
             <Empty text="No featured games yet. Check back soon." />
@@ -473,7 +468,6 @@ function Empty({ text }: { text: string }) {
 
 function GamesPage() {
   const { games } = useLibrary();
-  const { activeGame } = useGameModal();
   const [search, setSearch] = useState(new URLSearchParams(location.search).get('search') || '');
   const [cat, setCat] = useState('All Games');
   const [sort, setSort] = useState('newest');
@@ -532,13 +526,8 @@ function GamesPage() {
       </div>
       {list.length ? (
         <div className="game-grid all-grid">
-          {list.map((game, index) => (
-            <Fragment key={game.id}>
-              <GameCard game={game} />
-              {(index === 2 || (list.length <= 3 && index === list.length - 1)) && !activeGame && (
-                <AdsterraAd unit="rectangle" variant="card" />
-              )}
-            </Fragment>
+          {list.map((game) => (
+            <GameCard key={game.id} game={game} />
           ))}
         </div>
       ) : (
@@ -551,7 +540,7 @@ function GamesPage() {
 function GamePage() {
   const { slug } = useParams();
   const { games } = useLibrary();
-  const { openGame, activeGame } = useGameModal();
+  const { openGame } = useGameModal();
   const game = games.find((entry) => entry.slug === slug);
   const [loaded, setLoaded] = useState(false);
 
@@ -667,11 +656,6 @@ function GamePage() {
           <p>{game.controls}</p>
         </section>
       </div>
-      {!activeGame && (
-        <div className="detail-ad">
-          <AdsterraAd unit="rectangle" variant="inline" />
-        </div>
-      )}
       <div className="detail-bottom">
         <span>
           <Clock3 size={15} /> Added {new Date(game.createdAt).toLocaleDateString()}
@@ -1124,6 +1108,11 @@ export default function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {!activeGame && (
+        <div className="footer-ad wrap">
+          <AdsterraAd unit="rectangle" variant="footer" />
+        </div>
+      )}
       <Footer />
       <GameOverlayModal game={activeGame} onClose={closeGame} />
     </GameModalContext.Provider>

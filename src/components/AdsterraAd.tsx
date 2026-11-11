@@ -43,7 +43,7 @@ function buildAdDocument(config: UnitConfig) {
 
 type Props = {
   unit: AdUnit;
-  variant?: 'bar' | 'card' | 'inline';
+  variant?: 'bar' | 'footer';
   className?: string;
 };
 

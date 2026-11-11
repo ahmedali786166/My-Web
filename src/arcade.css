@@ -41,16 +41,11 @@
   width: 300px;
   height: 250px;
 }
-.ad-card {
-  grid-column: span 2;
-  width: auto;
-  height: auto;
-  min-height: 250px;
-  border-color: #a855f733;
-  background: radial-gradient(circle at 50% 0, #a855f722, transparent 62%), #0d0b14;
-}
-.ad-inline {
-  margin: 18px auto 0;
+.footer-ad {
+  display: flex;
+  justify-content: center;
+  padding: 56px 0 52px;
+  border-top: 1px solid #ffffff0a;
 }
 @media (max-width: 819px) {
   .ad-slot-leaderboard {
@@ -360,12 +355,11 @@
   .overlay-title b {
     font-size: 11px;
   }
-  .ad-bar {
-    min-height: 52px;
-    padding: 8px 10px;
-  }
   .ad-placeholder em {
     display: none;
+  }
+  .footer-ad {
+    padding: 36px 0 40px;
   }
   .detail-actions {
     margin-top: 16px;
@@ -375,11 +369,6 @@
   }
   .nav-links a {
     font-size: 12px;
-  }
-}
-@media (max-width: 380px) {
-  .ad-card {
-    grid-column: 1 / -1;
   }
 }
 @media (max-width: 420px) {
