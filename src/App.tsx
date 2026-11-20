@@ -62,6 +62,18 @@ function useGameModal() {
   return value;
 }
 
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = () => setMatches(mq.matches);
+    onChange();
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [query]);
+  return matches;
+}
+
 function useLibrary() {
   const [games, setGames] = useState<Game[]>(getGames);
   useEffect(() => {
@@ -1013,6 +1025,7 @@ function NotFound() {
 
 export default function App() {
   const [activeGame, setActiveGame] = useState<Game | null>(null);
+  const wideScreen = useMediaQuery('(min-width: 820px)');
   const openGame = useCallback((game: Game) => {
     if (game.gameUrl) setActiveGame(game);
   }, []);
@@ -1027,7 +1040,11 @@ export default function App() {
       {!activeGame && (
         <div className="top-ad">
           <div className="wrap">
-            <AdsterraAd unit="leaderboard" />
+            {wideScreen ? (
+              <AdsterraAd unit="leaderboard" />
+            ) : (
+              <AdsterraAd unit="rectangle" />
+            )}
           </div>
         </div>
       )}

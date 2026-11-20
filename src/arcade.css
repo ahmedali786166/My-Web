@@ -47,14 +47,6 @@
   padding: 56px 0 52px;
   border-top: 1px solid #ffffff0a;
 }
-@media (max-width: 819px) {
-  .ad-slot-leaderboard {
-    display: none;
-  }
-  .top-ad {
-    padding-top: 0;
-  }
-}
 .ad-placeholder {
   padding: 10px 16px;
   gap: 8px;
