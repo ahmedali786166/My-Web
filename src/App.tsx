@@ -44,7 +44,6 @@ import {
   where,
 } from 'firebase/firestore';
 import GameOverlayModal from './components/GameOverlayModal';
-import AdsterraAd from './components/AdsterraAd';
 
 const icons = [Gamepad2, PartyPopper, Star, Flame, Zap, MonitorPlay, Joystick, Gamepad];
 
@@ -60,18 +59,6 @@ function useGameModal() {
   const value = useContext(GameModalContext);
   if (!value) throw new Error('useGameModal must be used inside GameModalContext');
   return value;
-}
-
-function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    const onChange = () => setMatches(mq.matches);
-    onChange();
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, [query]);
-  return matches;
 }
 
 function useLibrary() {
@@ -1025,7 +1012,6 @@ function NotFound() {
 
 export default function App() {
   const [activeGame, setActiveGame] = useState<Game | null>(null);
-  const wideScreen = useMediaQuery('(min-width: 820px)');
   const openGame = useCallback((game: Game) => {
     if (game.gameUrl) setActiveGame(game);
   }, []);
@@ -1037,17 +1023,6 @@ export default function App() {
 
   return (
     <GameModalContext.Provider value={modalValue}>
-      {!activeGame && (
-        <div className="top-ad">
-          <div className="wrap">
-            {wideScreen ? (
-              <AdsterraAd unit="leaderboard" />
-            ) : (
-              <AdsterraAd unit="rectangle" />
-            )}
-          </div>
-        </div>
-      )}
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -1125,11 +1100,6 @@ export default function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {!activeGame && (
-        <div className="footer-ad wrap">
-          <AdsterraAd unit="rectangle" variant="footer" />
-        </div>
-      )}
       <Footer />
       <GameOverlayModal game={activeGame} onClose={closeGame} />
     </GameModalContext.Provider>

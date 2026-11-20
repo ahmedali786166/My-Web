@@ -4,8 +4,8 @@ Live: https://ahmedplay.tech
 Repository: https://github.com/ahmedali786166/My-Web
 
 A React + TypeScript + Vite browser-game portal with a dark neon design, an
-embedded featured game, catalogue discovery, guest favourites, a Firebase owner
-dashboard and Adsterra placements.
+embedded featured game, catalogue discovery, guest favourites and a Firebase
+owner dashboard.
 
 ## Features
 
@@ -14,10 +14,6 @@ dashboard and Adsterra placements.
   fullscreen, reload and close controls.
 - **Local games folder** — drop HTML5 games into `public/games/` and point the
   admin dashboard at `/games/<folder>/index.html`.
-- **Adsterra slots** — reusable `src/components/AdsterraAd.tsx` injects banner
-  scripts safely (sequential injection, cleanup on unmount). Slots render above
-  the header, as an in-feed neon card in the game grids, and in the overlay
-  footer. Slots stay hidden in production until their env key exists.
 - **Firebase** — email/password owner sign-in and Firestore game management.
   When the `games` collection is empty, the starter catalogue is seeded on the
   first successful owner login.
@@ -46,8 +42,6 @@ Copy `.env.example` to `.env` and fill in:
 | `VITE_FIREBASE_*` | Firebase web-app config (Auth + Firestore) |
 | `VITE_SITE_URL` | Canonical site URL |
 
-Ads are hard-coded in `src/components/AdsterraAd.tsx`: a 728x90 leaderboard at the very top and a 300x250 rectangle at the very bottom above the footer, with a wide safe gap from any game canvas. All ads unmount while a game is open. Set `VITE_ADSTERRA_PREVIEW=false` in a local `.env` if you want real ads during `npm run dev`.
-
 Never commit `.env`.
 
 ## Firebase setup
@@ -67,11 +61,11 @@ Never commit `.env`.
 For a hardened production setup, move the owner check to Firebase custom claims
 instead of the starter email rule.
 
-## Adsterra
+## Ads
 
-The component accepts either a full `https://…/invoke.js` URL or a bare ad key
-in each env variable. Only embed ad code you are authorized to use, and review
-Adsterra's placement and consent requirements for your region.
+All third-party ad code was removed. If you add a new network later, place its
+script at the extreme top or bottom of the layout with a clear safe gap from
+any game canvas, and never let it overlay gameplay.
 
 ## Deployment
 
@@ -89,6 +83,6 @@ domain.
 ## Before production launch
 
 - Replace placeholder thumbnails and legal text with owned/licensed assets.
-- Add Adsterra keys and complete a consent/privacy review.
+- Complete an ad consent/privacy review before re-adding any ad network.
 - Consider backend-verified play counts (the UI increments Firestore directly).
 - Run browser and device QA on the deployed domain.
