@@ -6,6 +6,21 @@
   font-size: 11.5px;
 }
 
+/* Smooth anchor scroll for hero buttons (offset below the fixed header) */
+html {
+  scroll-behavior: smooth;
+}
+#discover,
+#trending {
+  scroll-margin-top: 84px;
+}
+
+/* Keep the PLAY button on game cards always visible, not hover-only */
+.play-overlay {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
 /* ---------- Hero additions ---------- */
 .btn.ghost {
   background: transparent;

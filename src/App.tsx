@@ -28,7 +28,7 @@ import {
   Star,
   Zap,
 } from 'lucide-react';
-import { categories, FEATURED_GAME_ID, getGames, saveGames, starterGames, type Game } from './lib/games';
+import { categories, getGames, saveGames, starterGames, type Game } from './lib/games';
 import { auth, db, firebaseReady, OWNER_EMAIL } from './lib/firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import {
@@ -294,11 +294,6 @@ function Home() {
     .slice(0, 4);
   const filtered = category === 'All Games' ? live : live.filter((game) => game.category === category);
   const showTrending = live.length > 1 && trending.length > 0;
-  const heroGame =
-    live.find((game) => game.id === FEATURED_GAME_ID && game.gameUrl) ??
-    live.find((game) => game.gameUrl) ??
-    featured[0] ??
-    live[0];
 
   return (
     <main>
@@ -317,14 +312,12 @@ function Home() {
             next favourite game is one click away.
           </p>
           <div className="hero-actions">
-            {heroGame && (
-              <button type="button" className="btn primary" onClick={() => openGame(heroGame)}>
-                <Play fill="currentColor" size={16} /> PLAY NOW
-              </button>
-            )}
-            <Link to="/games" className="btn secondary">
+            <a href="#discover" className="btn primary">
+              <Play fill="currentColor" size={16} /> PLAY NOW
+            </a>
+            <a href="#discover" className="btn secondary">
               Explore games <ArrowUpRight size={17} />
-            </Link>
+            </a>
             {showTrending && (
               <a href="#trending" className="btn ghost">
                 Discover trending <Flame size={16} />
@@ -338,9 +331,9 @@ function Home() {
             <span>
               <Gamepad2 size={15} /> Free browser games
             </span>
-            {heroGame && (
+            {live.length > 0 && (
               <span className="hero-live">
-                <Play size={13} /> {heroGame.title} is live
+                <Play size={13} /> {live.length} Viral Meme Games Live — Choose Your Game!
               </span>
             )}
           </div>
